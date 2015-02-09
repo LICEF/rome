@@ -1,4 +1,4 @@
-package com.sun.syndication.feed.synd.comete;
+package com.rometools.rome.feed.synd.comete;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
-import com.sun.syndication.feed.module.comete.DCSubject;
-import com.sun.syndication.feed.module.comete.impl.util.LangString;
+import com.rometools.rome.feed.module.comete.DCSubject;
+import com.rometools.rome.feed.module.comete.impl.util.LangString;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
 
 public class CometeSyndFeedImpl extends SyndFeedImpl implements CometeSyndFeed {

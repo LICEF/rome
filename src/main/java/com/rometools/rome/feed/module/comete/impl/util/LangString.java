@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package com.sun.syndication.feed.module.comete.impl.util;
+package com.rometools.rome.feed.module.comete.impl.util;
 
 import com.rometools.rome.feed.CopyFrom;
 

@@ -14,15 +14,15 @@
  * limitations under the License.
  *
  */
-package com.sun.syndication.feed.module.comete.impl;
+package com.rometools.rome.feed.module.comete.impl;
 
 import com.rometools.rome.feed.module.Module;
-import com.sun.syndication.feed.module.comete.DCModuleImpl;
-import com.sun.syndication.feed.module.comete.DCSubjectImpl;
-import com.sun.syndication.feed.module.comete.DCModule;
-import com.sun.syndication.feed.module.comete.DCSubject;
-import com.sun.syndication.feed.module.comete.impl.util.LangString;
-import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
+import com.rometools.rome.feed.module.comete.DCModuleImpl;
+import com.rometools.rome.feed.module.comete.DCSubjectImpl;
+import com.rometools.rome.feed.module.comete.DCModule;
+import com.rometools.rome.feed.module.comete.DCSubject;
+import com.rometools.rome.feed.module.comete.impl.util.LangString;
+import com.rometools.rome.feed.module.comete.impl.util.LangStringImpl;
 import com.rometools.rome.io.ModuleParser;
 import com.rometools.rome.io.WireFeedParser;
 import com.rometools.rome.io.impl.DateParser;

@@ -14,13 +14,13 @@
  * limitations under the License.
  *
  */
-package com.sun.syndication.feed.module.comete;
+package com.rometools.rome.feed.module.comete;
 
 import com.rometools.rome.feed.CopyFrom;
 import com.rometools.rome.feed.impl.ObjectBean;
 import com.rometools.rome.feed.impl.CopyFromHelper;
-import com.sun.syndication.feed.module.comete.impl.util.LangString;
-import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
+import com.rometools.rome.feed.module.comete.impl.util.LangString;
+import com.rometools.rome.feed.module.comete.impl.util.LangStringImpl;
 
 import java.util.Collections;
 import java.util.HashMap;

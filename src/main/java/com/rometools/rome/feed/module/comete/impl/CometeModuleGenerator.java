@@ -13,7 +13,7 @@
  *
  */
 
-package com.sun.syndication.feed.module.comete.impl;
+package com.rometools.rome.feed.module.comete.impl;
 
 import java.util.Collections;
 import java.util.Date;
@@ -29,8 +29,8 @@ import org.jdom2.Namespace;
 
 import com.rometools.rome.feed.atom.Link;
 import com.rometools.rome.feed.module.Module;
-import com.sun.syndication.feed.module.comete.CometeModule;
-import com.sun.syndication.feed.module.comete.impl.util.LangString;
+import com.rometools.rome.feed.module.comete.CometeModule;
+import com.rometools.rome.feed.module.comete.impl.util.LangString;
 import com.rometools.rome.io.ModuleGenerator;
 import com.rometools.rome.io.impl.DateParser;
 

@@ -13,7 +13,7 @@
  *
  */
 
-package com.sun.syndication.feed.module.comete.impl;
+package com.rometools.rome.feed.module.comete.impl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,7 +29,7 @@ import org.jdom2.Parent;
 
 import com.rometools.rome.feed.atom.Link;
 import com.rometools.rome.feed.module.Module;
-import com.sun.syndication.feed.module.comete.CometeModule;
+import com.rometools.rome.feed.module.comete.CometeModule;
 import com.rometools.rome.io.ModuleParser;
 
 /**

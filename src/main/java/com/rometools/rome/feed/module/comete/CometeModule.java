@@ -13,30 +13,15 @@
  *
  */
 
-package com.sun.syndication.feed.module.comete;
+package com.rometools.rome.feed.module.comete;
 
-import java.util.Date;
-import java.util.List;
+import com.rometools.rome.feed.module.Module;
 
-import com.rometools.rome.feed.atom.Link;
-
-/** Provides access to A9 Open Search information.
+/** Provides access to Comete information.
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  */
-public interface CometeResponse {
+public interface CometeModule extends Module, CometeResponse {
 
-    public void setExtraInfos( List extraInfos );
-    public List getExtraInfos(); 
-    public void addExtraInfo( String extraInfo );
-
-    public void setKeywords( List keywords );
-    public List getKeywords(); 
-    public void addKeyword( String keyword );
-
-    public void setAdded( Date date );
-    public Date getAdded();
-
-    public void setUpdated( Date date );
-    public Date getUpdated();
-
+    public final static String URI = "http://comete.licef.ca/reference#";
+    
 }

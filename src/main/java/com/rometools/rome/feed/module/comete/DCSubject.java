@@ -14,10 +14,10 @@
  * limitations under the License.
  *
  */
-package com.sun.syndication.feed.module.comete;
+package com.rometools.rome.feed.module.comete;
 
 import com.rometools.rome.feed.CopyFrom;
-import com.sun.syndication.feed.module.comete.impl.util.LangString;
+import com.rometools.rome.feed.module.comete.impl.util.LangString;
 
 /**
  * Subject of the Dublin Core ModuleImpl.
