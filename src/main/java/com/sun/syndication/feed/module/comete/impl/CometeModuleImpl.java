@@ -17,7 +17,6 @@ package com.sun.syndication.feed.module.comete.impl;
 import com.sun.syndication.feed.atom.Link;
 import com.sun.syndication.feed.module.ModuleImpl;
 import com.sun.syndication.feed.module.comete.CometeModule;
-//import com.sun.syndication.feed.module.comete.entity.OSQuery;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -25,114 +24,41 @@ import java.util.List;
 
 
 /**
- * @author Michael W. Nassif (enrouteinc@gmail.com)
+ * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  * Comete Module implementation
  */
 public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serializable {
-    private int totalResults = -1;
-    private int startIndex = 1;
-    private int itemsPerPage = -1;
-    private Link link;
-    private List queries;
 
     public CometeModuleImpl() {
         super(CometeModuleImpl.class, CometeModuleImpl.URI);
     }
 
-    /**
-     * @return Returns the itemsPerPage.
-     */
-    public int getItemsPerPage() {
-        return itemsPerPage;
+    public List getExtraInfos() {
+        this.extraInfos = (extraInfos == null) ? new LinkedList() : extraInfos;
+
+        return this.extraInfos;
     }
 
-    /**
-     * @param itemsPerPage The itemsPerPage to set.
-     */
-    public void setItemsPerPage(int itemsPerPage) {
-        this.itemsPerPage = itemsPerPage;
+    public void setExtraInfos( List extraInfos ) {
+        this.extraInfos = extraInfos;
     }
 
-    /**
-     * @return Returns the link.
-     */
-    public Link getLink() {
-        return link;
-    }
-
-    /**
-     * @param link The link to set.
-     */
-    public void setLink(Link link) {
-        this.link = link;
-    }
-
-    
-    /**
-     * @return Returns the queries.
-     */
-    public List getQueries() {
-        this.queries = (queries == null) ? new LinkedList() : queries;
-
-        return this.queries;
-    }
-
-    /**
-     * @param queries The queries to set.
-     */
-    public void setQueries(List queries) {
-        this.queries = queries;
-    }
-
-    //public void addQuery(OSQuery query) {
-    //    if (queries != null) {
-    //        queries.add(query);
-    //    } else {
-    //        queries = new LinkedList();
-    //        queries.add(query);
-    //    }
-    //}
-
-    /**
-     * @return Returns the startIndex.
-     */
-    public int getStartIndex() {
-        return startIndex;
-    }
-
-    /**
-     * @param startIndex The startIndex to set.
-     */
-    public void setStartIndex(int startIndex) {
-        this.startIndex = startIndex;
-    }
-
-    /**
-     * @return Returns the totalResults.
-     */
-    public int getTotalResults() {
-        return totalResults;
-    }
-
-    /**
-     * @param totalResults The totalResults to set.
-     */
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
+    public void addExtraInfo( String extraInfo ) {
+        if( extraInfos != null )
+            extraInfos.add( extraInfo );
+        else {
+            extraInfos = new LinkedList();
+            extraInfos.add( extraInfo );
+        }
     }
 
     /* (non-Javadoc)
      * @see com.sun.syndication.feed.CopyFrom#copyFrom(java.lang.Object)
      */
     public void copyFrom(Object obj) {
-        CometeModule osm = (CometeModuleImpl) obj;
+        CometeModule cm = (CometeModuleImpl) obj;
 
-        setTotalResults(osm.getTotalResults());
-        setItemsPerPage(osm.getItemsPerPage());
-        setStartIndex(osm.getStartIndex());
-        setLink(osm.getLink());
-
-        // setQueries(osm.getQueries());
+        setExtraInfos( cm.getExtraInfos() );
     }
 
     /* (non-Javadoc)
@@ -142,4 +68,7 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         // TODO Auto-generated method stub
         return CometeModule.class;
     }
+
+    private List extraInfos;    
+
 }

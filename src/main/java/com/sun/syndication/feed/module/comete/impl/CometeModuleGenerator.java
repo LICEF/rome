@@ -28,17 +28,15 @@ import org.jdom.Namespace;
 import com.sun.syndication.feed.atom.Link;
 import com.sun.syndication.feed.module.Module;
 import com.sun.syndication.feed.module.comete.CometeModule;
-//import com.sun.syndication.feed.module.comete.RequiredAttributeMissingException;
-//import com.sun.syndication.feed.module.comete.entity.OSQuery;
 import com.sun.syndication.io.ModuleGenerator;
 
 /**
- * @author Michael W. Nassif (enrouteinc@gmail.com)
+ * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  * Comete implementation of ModuleGenerator
  */
 public class CometeModuleGenerator  implements ModuleGenerator {
     
-    private static final Namespace OS_NS  = Namespace.getNamespace("comete", CometeModule.URI);
+    private static final Namespace Comete_NS = Namespace.getNamespace( "comete", CometeModule.URI );
 
     public String getNamespaceUri() {
         return CometeModule.URI;
@@ -48,7 +46,7 @@ public class CometeModuleGenerator  implements ModuleGenerator {
 
     static {
         Set nss = new HashSet();
-        nss.add(OS_NS);
+        nss.add(Comete_NS);
         NAMESPACES = Collections.unmodifiableSet(nss);
     }
 
@@ -67,106 +65,27 @@ public class CometeModuleGenerator  implements ModuleGenerator {
 
     public void generate(Module module, Element element) {
 
-        CometeModule osm = (CometeModule)module;
+        CometeModule cm = (CometeModule)module;
 
-        if(osm.getItemsPerPage() > -1){
-            element.addContent(generateSimpleElement("itemsPerPage", Integer.toString(osm.getItemsPerPage())));
-        }
-
-        if(osm.getTotalResults() > -1){
-            element.addContent(generateSimpleElement("totalResults", Integer.toString(osm.getTotalResults())));
-        }
+        if(cm.getExtraInfos() != null){
             
-        int startIndex = (osm.getStartIndex() > 0)?osm.getStartIndex():1;
-        element.addContent(generateSimpleElement("startIndex",Integer.toString(startIndex)));
-
-        if(osm.getQueries() != null){
+            List extraInfos = cm.getExtraInfos();
             
-            List queries = osm.getQueries();
-            
-            //for (Iterator iter = queries.iterator(); iter.hasNext();) {
-            //    OSQuery query = (OSQuery) iter.next();
-            //    if(query != null){
-            //        element.addContent(generateQueryElement(query));
-            //    }
-            //}
+            for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
+                String extraInfo = (String) it.next();
+                if( extraInfo != null) {
+                    element.addContent( generateExtraInfoElement( extraInfo ) );
+                }
+            }
         }           
-        
-        if(osm.getLink() != null){
-            element.addContent(generateLinkElement(osm.getLink()));
-        }
     }
 
-    //protected Element generateQueryElement(OSQuery query) {
-    //    
-    //    Element qElement = new Element("Query", OS_NS);
-    //    
-    //    if (query.getRole() != null) {
-    //        Attribute roleAttribute = new Attribute("role", query.getRole());
-    //        qElement.setAttribute(roleAttribute);
-    //    }
-    //    else{
-    //        throw new RequiredAttributeMissingException("If declaring a Query element, the field 'role' must be be specified");
-    //    }
-
-    //    if(query.getOsd() != null){
-    //        Attribute osd = new Attribute("osd", query.getOsd());
-    //        qElement.setAttribute(osd);
-    //    }
-    //    
-    //    if(query.getSearchTerms() != null){
-    //        Attribute searchTerms = new Attribute("searchTerms", query.getSearchTerms());
-    //        qElement.setAttribute(searchTerms);
-    //    }
-    //    
-    //    if(query.getStartPage() > -1){
-    //        int startPage = (query.getStartPage() != 0)?query.getStartPage():1;
-    //        Attribute sp = new Attribute("startPage", Integer.toString(startPage));
-    //        qElement.setAttribute(sp);
-    //    }
-    //    
-    //    if(query.getTitle() != null){
-    //        qElement.setAttribute(new Attribute("title", query.getTitle()));
-    //    }
- 
-    //    if(query.getTotalResults() > -1){
-    //        qElement.setAttribute(new Attribute("totalResults", Integer.toString(query.getTotalResults())));
-    //    }
-    //    
-    //    return qElement;
-    //}
+    protected Element generateExtraInfoElement( String extraInfo ) {
+        
+        Element qElement = new Element( "extraInfo", Comete_NS );
+        qElement.setText( extraInfo );
+        
+        return qElement;
+    }
     
-    protected Element generateLinkElement(Link link) {
-        Element linkElement = new Element("link", OS_NS);
-
-        if (link.getRel() != null) {
-            Attribute relAttribute = new Attribute("rel", "search");
-            linkElement.setAttribute(relAttribute);
-        }
-
-        if (link.getType() != null) {
-            Attribute typeAttribute = new Attribute("type", link.getType());
-            linkElement.setAttribute(typeAttribute);
-        }
-
-        if (link.getHref() != null) {
-            Attribute hrefAttribute = new Attribute("href", link.getHref());
-            linkElement.setAttribute(hrefAttribute);
-        }
-        
-        if (link.getHreflang() != null) {
-            Attribute hreflangAttribute = new Attribute("hreflang", link.getHreflang());
-            linkElement.setAttribute(hreflangAttribute);
-        }
-        return linkElement;
-    }
-
-    protected Element generateSimpleElement(String name, String value)  {
-
-        Element element = new Element(name, OS_NS);
-        element.addContent(value);
-
-        return element;
-    }
-
 }
