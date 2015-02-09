@@ -20,7 +20,7 @@ import com.sun.syndication.feed.module.Module;
 /** Provides access to Comete information.
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  */
-public interface CometeModule extends Module, CometeResponse{
+public interface CometeModule extends Module, CometeResponse {
 
     public final static String URI = "http://comete.licef.ca/reference#";
     

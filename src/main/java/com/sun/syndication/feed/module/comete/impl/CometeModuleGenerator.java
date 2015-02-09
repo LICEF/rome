@@ -69,24 +69,29 @@ public class CometeModuleGenerator  implements ModuleGenerator {
         CometeModule cm = (CometeModule)module;
 
         if(cm.getExtraInfos() != null){
-            
             List extraInfos = cm.getExtraInfos();
-            
             for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
                 LangString langString = (LangString) it.next();
-                if( langString != null) {
-                    element.addContent( generateExtraInfoElement( langString ) );
-                }
+                if( langString != null)
+                    element.addContent( generateLangStringElement( "extraInfo", langString ) );
+            }
+        }           
+
+        if(cm.getKeywords() != null){
+            List extraInfos = cm.getKeywords();
+            for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
+                LangString langString = (LangString) it.next();
+                if( langString != null)
+                    element.addContent( generateLangStringElement( "keyword", langString ) );
             }
         }           
     }
 
-    protected Element generateExtraInfoElement( LangString langString ) {
-        
-        Element qElement = new Element( "extraInfo", Comete_NS );
+    protected Element generateLangStringElement( String tagName, LangString langString ) {
+        Element qElement = new Element( tagName, Comete_NS );
         if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
             qElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
-        qElement.addContent( langString.getString() );
+        qElement.setText( langString.getString() );
         
         return qElement;
     }

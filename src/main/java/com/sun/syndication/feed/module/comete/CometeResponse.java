@@ -22,10 +22,14 @@ import com.sun.syndication.feed.atom.Link;
 /** Provides access to A9 Open Search information.
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  */
-public interface CometeResponse{
+public interface CometeResponse {
 
     public void setExtraInfos( List extraInfos );
     public List getExtraInfos(); 
     public void addExtraInfo( String extraInfo );
+
+    public void setKeywords( List keywords );
+    public List getKeywords(); 
+    public void addKeyword( String keyword );
 
 }

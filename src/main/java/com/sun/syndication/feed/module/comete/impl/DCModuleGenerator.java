@@ -239,7 +239,6 @@ public class DCModuleGenerator implements ModuleGenerator {
     }
     
     protected Element generateLangStringElement( String tagName, LangString langString ) {
-        
         Element qElement = new Element( tagName, getDCNamespace() );
         if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
             qElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );

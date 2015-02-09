@@ -57,6 +57,28 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         extraInfos.add( langString );
     }
 
+    public List getKeywords() {
+        this.keywords = (keywords == null) ? new LinkedList() : keywords;
+
+        return this.keywords;
+    }
+
+    public void setKeywords( List keywords ) {
+        this.keywords = keywords;
+    }
+
+    public void addKeyword( String string ) {
+        LangString langString = new LangStringImpl();
+        langString.setString( string );
+        addKeyword( langString );
+    }
+
+    public void addKeyword( LangString langString ) {
+        if( keywords == null )
+            keywords = new LinkedList();
+        keywords.add( langString );
+    }
+
     /* (non-Javadoc)
      * @see com.sun.syndication.feed.CopyFrom#copyFrom(java.lang.Object)
      */
@@ -64,6 +86,7 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         CometeModule cm = (CometeModuleImpl) obj;
 
         setExtraInfos( cm.getExtraInfos() );
+        setKeywords( cm.getKeywords() );
     }
 
     /* (non-Javadoc)
@@ -75,5 +98,6 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
     }
 
     private List extraInfos;    
+    private List keywords;    
 
 }
