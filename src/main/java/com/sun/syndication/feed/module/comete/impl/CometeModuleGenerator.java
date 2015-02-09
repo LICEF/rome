@@ -28,7 +28,7 @@ import org.jdom.Namespace;
 import com.sun.syndication.feed.atom.Link;
 import com.sun.syndication.feed.module.Module;
 import com.sun.syndication.feed.module.comete.CometeModule;
-import com.sun.syndication.feed.module.comete.util.LangString;
+import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.io.ModuleGenerator;
 
 /**
@@ -86,7 +86,7 @@ public class CometeModuleGenerator  implements ModuleGenerator {
         Element qElement = new Element( "extraInfo", Comete_NS );
         if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
             qElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
-        qElement.setText( langString.getString() );
+        qElement.addContent( langString.getString() );
         
         return qElement;
     }
