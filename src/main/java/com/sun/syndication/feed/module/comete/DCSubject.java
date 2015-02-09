@@ -63,6 +63,22 @@ public interface DCSubject extends Cloneable,CopyFrom {
     void setValue(LangString value);
 
     /**
+     * Returns the DublinCore subject value.
+     * <p>
+     * @return the DublinCore subject value, <b>null</b> if none.
+     *
+     */
+    String getIdentifier();
+
+    /**
+     * Sets the DublinCore subject value.
+     * <p>
+     * @param value the DublinCore subject value to set, <b>null</b> if none.
+     *
+     */
+    void setIdentifier(String value);
+
+    /**
      * Creates a deep clone of the object.
      * <p>
      * @return a clone of the object.

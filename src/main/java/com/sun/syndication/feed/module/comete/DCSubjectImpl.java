@@ -40,6 +40,7 @@ public class DCSubjectImpl implements Cloneable,Serializable, DCSubject {
     private ObjectBean _objBean;
     private String _taxonomyUri;
     private LangString _value;
+    private String _identifier;
 
     /**
      * Default constructor. All properties are set to <b>null</b>.
@@ -148,11 +149,21 @@ public class DCSubjectImpl implements Cloneable,Serializable, DCSubject {
         Map basePropInterfaceMap = new HashMap();
         basePropInterfaceMap.put("taxonomyUri",String.class);
         basePropInterfaceMap.put("value",LangString.class);
+        basePropInterfaceMap.put("identifier",String.class);
 
         Map basePropClassImplMap = new HashMap();
         basePropClassImplMap.put(LangString.class,LangStringImpl.class);
 
         COPY_FROM_HELPER = new CopyFromHelper(DCSubject.class,basePropInterfaceMap,basePropClassImplMap);
     }
+
+   public String getIdentifier() {
+       // TODO Auto-generated method stub
+       return this._identifier;
+   }
+
+   public void setIdentifier(String value) {
+       this._identifier = value;
+   }
 
 }

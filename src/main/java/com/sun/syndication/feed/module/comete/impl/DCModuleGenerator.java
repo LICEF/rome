@@ -22,6 +22,7 @@ import com.sun.syndication.feed.module.comete.DCSubject;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.io.ModuleGenerator;
 import com.sun.syndication.io.impl.DateParser;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Namespace;
@@ -47,21 +48,27 @@ import java.util.Collections;
  */
 public class DCModuleGenerator implements ModuleGenerator {
 
+    private static final String XML_URI = "http://www.w3.org/XML/1998/namespace";
     private static final String DC_URI  = "http://purl.org/dc/elements/1.1/";
     private static final String TAXO_URI = "http://purl.org/rss/1.0/modules/taxonomy/";
     private static final String RDF_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+    private static final String SKOS_URI = "http://www.w3.org/2004/02/skos/core#";
 
+    private static final Namespace XML_NS = Namespace.getNamespace("xml", XML_URI);
     private static final Namespace DC_NS  = Namespace.getNamespace("dc", DC_URI);
     private static final Namespace TAXO_NS = Namespace.getNamespace("taxo", TAXO_URI);
     private static final Namespace RDF_NS = Namespace.getNamespace("rdf", RDF_URI);
+    private static final Namespace SKOS_NS = Namespace.getNamespace("skos", SKOS_URI);
 
-    private static final Set NAMESPACES;
+    private static final Set<Namespace> NAMESPACES;
 
     static {
-        Set nss = new HashSet();
+        Set<Namespace> nss = new HashSet<Namespace>();
         nss.add(DC_NS);
         nss.add(TAXO_NS);
         nss.add(RDF_NS);
+        nss.add(SKOS_NS);
+        nss.add(XML_NS);
         NAMESPACES = Collections.unmodifiableSet(nss);
     }
 
@@ -79,6 +86,14 @@ public class DCModuleGenerator implements ModuleGenerator {
 
     private final Namespace getTaxonomyNamespace() {
         return TAXO_NS;
+    }
+
+    private final Namespace getSkosNamespace() {
+        return SKOS_NS;
+    }
+
+    private final Namespace getXmlNamespace() {
+        return XML_NS;
     }
 
     /**
@@ -109,10 +124,10 @@ public class DCModuleGenerator implements ModuleGenerator {
 
             if (dcModule.getTitle() != null) {
                 //element.addContent(generateSimpleElementList("title", dcModule.getTitles()));
-                List titles = dcModule.getTitles();
+                List<LangString> titles = dcModule.getTitles();
                 
-                for( Iterator it = titles.iterator(); it.hasNext(); ) {
-                    LangString langString = (LangString) it.next();
+                for( Iterator<LangString> it = titles.iterator(); it.hasNext(); ) {
+                    LangString langString = it.next();
                     if( langString != null)
                         element.addContent( generateLangStringElement( "title", langString ) );
                 }
@@ -120,16 +135,28 @@ public class DCModuleGenerator implements ModuleGenerator {
             if (dcModule.getCreator() != null) {
                 element.addContent(generateSimpleElementList("creator", dcModule.getCreators()));
             }
-            List subjects = dcModule.getSubjects();
-            for (int i = 0; i < subjects.size(); i++) {
-                element.addContent(generateSubjectElement((DCSubject) subjects.get(i)));
+            List<DCSubject> subjects = dcModule.getSubjects();
+            if (subjects.size() > 0) {
+                Element taxos = new Element("topics", getTaxonomyNamespace());
+                element.addContent(taxos);
+                Element bag = new Element("Bag", getRDFNamespace());
+                taxos.addContent(bag);
+                for (int i = 0; i < subjects.size(); i++) {
+                    DCSubject subject = subjects.get(i);
+                    if (subject.getTaxonomyUri() != null) {
+                        bag.addContent(generateTaxoLinkElement(subject));
+                        element.addContent(generateSkosSubjectElement(subject));
+                    } else {
+                        element.addContent(generateSimpleSubjectElement(subject));
+                    }
+                }
             }
             if (dcModule.getDescription() != null) {
                 //element.addContent(generateSimpleElementList("description", dcModule.getDescriptions()));
-                List descriptions = dcModule.getDescriptions();
+                List<LangString> descriptions = dcModule.getDescriptions();
                 
-                for( Iterator it = descriptions.iterator(); it.hasNext(); ) {
-                    LangString langString = (LangString) it.next();
+                for( Iterator<LangString> it = descriptions.iterator(); it.hasNext(); ) {
+                    LangString langString = it.next();
                     if( langString != null)
                         element.addContent( generateLangStringElement( "description", langString ) );
                 }
@@ -141,9 +168,9 @@ public class DCModuleGenerator implements ModuleGenerator {
                 element.addContent(generateSimpleElementList("contributor", dcModule.getContributors()));
             }
             if (dcModule.getDate() != null) {
-                for (Iterator i = dcModule.getDates().iterator(); i.hasNext();) {
+                for (Iterator<Date> i = dcModule.getDates().iterator(); i.hasNext();) {
                     element.addContent(generateSimpleElement("date",
-                            DateParser.formatW3CDateTime((Date) i.next())));
+                            DateParser.formatW3CDateTime(i.next())));
                 }
             }
             if (dcModule.getType() != null) {
@@ -179,34 +206,59 @@ public class DCModuleGenerator implements ModuleGenerator {
      * @param subject the subject to generate an element for.
      * @return the element for the subject.
      */
-    protected final Element generateSubjectElement(DCSubject subject) {
+    protected final Element generateSkosSubjectElement(DCSubject subject) {
         Element subjectElement = new Element("subject", getDCNamespace());
+        Element conceptElement = new Element("Concept", getSkosNamespace());
+        Attribute resourceAttribute = new Attribute("about", subject.getIdentifier(), getRDFNamespace());
+        conceptElement.setAttribute(resourceAttribute);
 
-        if (subject.getTaxonomyUri() != null) {
-            Element descriptionElement = new Element("Description", getRDFNamespace());
-            Element topicElement = new Element("topic", getTaxonomyNamespace());
-            Attribute resourceAttribute = new Attribute("resource", subject.getTaxonomyUri(), getRDFNamespace());
-            topicElement.setAttribute(resourceAttribute);
-            descriptionElement.addContent(topicElement);
+        Element typeElement = new Element("type", getRDFNamespace());
+        typeElement.addContent(SKOS_URI + "Concept");
+        conceptElement.addContent(typeElement);
 
-            if (subject.getValue() != null) {
-                LangString langString = subject.getValue();
-                Element valueElement = new Element("value", getRDFNamespace());
-                if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
-                    valueElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
-                valueElement.addContent(langString.getString());
-                descriptionElement.addContent(valueElement);
-            }
-            subjectElement.addContent(descriptionElement);
-        } else {
+        Element schemeElement = new Element("inScheme", getSkosNamespace());
+        Attribute taxoAttribute = new Attribute("about", subject.getTaxonomyUri(), getRDFNamespace());
+        schemeElement.setAttribute(taxoAttribute);
+        conceptElement.addContent(schemeElement);
+
+        if (subject.getValue() != null) {
             LangString langString = subject.getValue();
+            Element labelElement = new Element("prefLabel", getSkosNamespace());
             if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
-                subjectElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
-            subjectElement.addContent(langString.getString());
+                labelElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
+            labelElement.addContent(langString.getString());
+            conceptElement.addContent(labelElement);
         }
+        subjectElement.addContent(conceptElement);
         return subjectElement;
     }
 
+    /**
+     * Utility method to generate an element for a subject.
+     * <p>
+     * @param subject the subject to generate an element for.
+     * @return the element for the subject.
+     */
+    protected final Element generateSimpleSubjectElement(DCSubject subject) {
+        Element subjectElement = new Element("subject", getDCNamespace());
+        LangString langString = subject.getValue();
+        if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
+            subjectElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
+        subjectElement.addContent(langString.getString());
+        return subjectElement;
+    }
+
+    /**
+     * Utility method to generate an element for a subject.
+     * <p>
+     * @param subject the subject to generate an element for.
+     * @return the element for the subject.
+     */
+    protected final Element generateTaxoLinkElement(DCSubject subject) {
+        Element subjectElement = new Element("li", getRDFNamespace());
+        subjectElement.setAttribute(new Attribute("resource", subject.getIdentifier()));
+        return subjectElement;
+    }
 
     /**
      * Utility method to generate a single element containing a string.
@@ -229,8 +281,8 @@ public class DCModuleGenerator implements ModuleGenerator {
      * @param value the list of values for the elements.
      * @return a list of Elements created.
      */
-    protected final List generateSimpleElementList(String name, List value) {
-        List elements = new ArrayList();
+    protected final List<Element> generateSimpleElementList(String name, List value) {
+        List<Element> elements = new ArrayList<Element>();
         for (Iterator i = value.iterator(); i.hasNext();) {
             elements.add(generateSimpleElement(name, (String) i.next()));
         }
