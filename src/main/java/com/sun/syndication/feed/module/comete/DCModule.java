@@ -16,8 +16,8 @@
  */
 package com.sun.syndication.feed.module.comete;
 
-import com.sun.syndication.feed.CopyFrom;
-import com.sun.syndication.feed.module.Module;
+import com.rometools.rome.feed.CopyFrom;
+import com.rometools.rome.feed.module.Module;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 
 import java.util.List;

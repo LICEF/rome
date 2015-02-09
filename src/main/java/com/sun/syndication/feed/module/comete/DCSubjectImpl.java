@@ -16,8 +16,9 @@
  */
 package com.sun.syndication.feed.module.comete;
 
-import com.sun.syndication.feed.impl.ObjectBean;
-import com.sun.syndication.feed.impl.CopyFromHelper;
+import com.rometools.rome.feed.CopyFrom;
+import com.rometools.rome.feed.impl.ObjectBean;
+import com.rometools.rome.feed.impl.CopyFromHelper;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
 
@@ -139,7 +140,7 @@ public class DCSubjectImpl implements Cloneable,Serializable, DCSubject {
         return DCSubject.class;
     }
 
-    public void copyFrom(Object obj) {
+    public void copyFrom(CopyFrom obj) {
         COPY_FROM_HELPER.copy(this,obj);
     }
 

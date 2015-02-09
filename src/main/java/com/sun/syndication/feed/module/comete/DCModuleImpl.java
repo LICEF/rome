@@ -16,9 +16,10 @@
  */
 package com.sun.syndication.feed.module.comete;
 
-import com.sun.syndication.feed.impl.CopyFromHelper;
-import com.sun.syndication.feed.impl.ObjectBean;
-import com.sun.syndication.feed.module.ModuleImpl;
+import com.rometools.rome.feed.CopyFrom;
+import com.rometools.rome.feed.impl.CopyFromHelper;
+import com.rometools.rome.feed.impl.ObjectBean;
+import com.rometools.rome.feed.module.ModuleImpl;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
 
@@ -814,7 +815,7 @@ public class DCModuleImpl extends ModuleImpl implements DCModule {
         return DCModule.class;
     }
 
-    public final void copyFrom(Object obj) {
+    public final void copyFrom(CopyFrom obj) {
         COPY_FROM_HELPER.copy(this,obj);
     }
 

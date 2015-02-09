@@ -16,21 +16,22 @@
  */
 package com.sun.syndication.feed.module.comete.impl;
 
-import com.sun.syndication.feed.module.Module;
+import com.rometools.rome.feed.module.Module;
 import com.sun.syndication.feed.module.comete.DCModule;
 import com.sun.syndication.feed.module.comete.DCSubject;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
-import com.sun.syndication.io.ModuleGenerator;
-import com.sun.syndication.io.impl.DateParser;
+import com.rometools.rome.io.ModuleGenerator;
+import com.rometools.rome.io.impl.DateParser;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
-import org.jdom.Namespace;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
@@ -170,7 +171,7 @@ public class DCModuleGenerator implements ModuleGenerator {
             if (dcModule.getDate() != null) {
                 for (Iterator<Date> i = dcModule.getDates().iterator(); i.hasNext();) {
                     element.addContent(generateSimpleElement("date",
-                            DateParser.formatW3CDateTime(i.next())));
+                            DateParser.formatW3CDateTime(i.next(), Locale.FRENCH)));
                 }
             }
             if (dcModule.getType() != null) {

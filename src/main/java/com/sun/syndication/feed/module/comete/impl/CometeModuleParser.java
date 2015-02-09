@@ -20,16 +20,17 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
-import org.jdom.Namespace;
-import org.jdom.Parent;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
+import org.jdom2.Parent;
 
-import com.sun.syndication.feed.atom.Link;
-import com.sun.syndication.feed.module.Module;
+import com.rometools.rome.feed.atom.Link;
+import com.rometools.rome.feed.module.Module;
 import com.sun.syndication.feed.module.comete.CometeModule;
-import com.sun.syndication.io.ModuleParser;
+import com.rometools.rome.io.ModuleParser;
 
 /**
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
@@ -43,7 +44,7 @@ public class CometeModuleParser implements ModuleParser {
         return CometeModule.URI;
     }
 
-    public Module parse( Element dcRoot ) {
+    public Module parse( Element dcRoot, Locale locale ) {
 
         // Not implemented yet.
 

@@ -16,23 +16,24 @@
  */
 package com.sun.syndication.feed.module.comete.impl;
 
-import com.sun.syndication.feed.module.Module;
+import com.rometools.rome.feed.module.Module;
 import com.sun.syndication.feed.module.comete.DCModuleImpl;
 import com.sun.syndication.feed.module.comete.DCSubjectImpl;
 import com.sun.syndication.feed.module.comete.DCModule;
 import com.sun.syndication.feed.module.comete.DCSubject;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
-import com.sun.syndication.io.ModuleParser;
-import com.sun.syndication.io.WireFeedParser;
-import com.sun.syndication.io.impl.DateParser;
-import org.jdom.Attribute;
-import org.jdom.Element;
-import org.jdom.Namespace;
+import com.rometools.rome.io.ModuleParser;
+import com.rometools.rome.io.WireFeedParser;
+import com.rometools.rome.io.impl.DateParser;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Parser for the Dublin Core module.
@@ -69,7 +70,7 @@ public class DCModuleParser implements ModuleParser {
      * @param dcRoot the root element containing the module elements.
      * @return the module parsed from the element tree, <i>null</i> if none.
      */
-    public Module parse(Element dcRoot) {
+    public Module parse(Element dcRoot, Locale locale) {
         boolean foundSomething = false;
         DCModule dcm = new DCModuleImpl();
 
@@ -106,7 +107,7 @@ public class DCModuleParser implements ModuleParser {
         eList = dcRoot.getChildren("date", getDCNamespace());
         if (eList.size() > 0) {
             foundSomething = true;
-            dcm.setDates(parseElementListDate(eList));
+            dcm.setDates(parseElementListDate(eList, locale));
         }
         eList = dcRoot.getChildren("type", getDCNamespace());
         if (eList.size() > 0) {
@@ -227,11 +228,11 @@ public class DCModuleParser implements ModuleParser {
      * @param eList the list of elements to parse.
      * @return the list of dates.
      */
-    protected final List parseElementListDate(List eList) {
+    protected final List parseElementListDate(List eList, Locale locale) {
         List values = new ArrayList();
         for (Iterator i = eList.iterator(); i.hasNext();) {
             Element e = (Element) i.next();
-            values.add(DateParser.parseDate(e.getText()));
+            values.add(DateParser.parseDate(e.getText(), locale));
         }
 
         return values;

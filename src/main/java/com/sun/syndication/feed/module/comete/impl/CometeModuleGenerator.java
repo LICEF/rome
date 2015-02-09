@@ -20,18 +20,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
-import org.jdom.Namespace;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
-import com.sun.syndication.feed.atom.Link;
-import com.sun.syndication.feed.module.Module;
+import com.rometools.rome.feed.atom.Link;
+import com.rometools.rome.feed.module.Module;
 import com.sun.syndication.feed.module.comete.CometeModule;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
-import com.sun.syndication.io.ModuleGenerator;
-import com.sun.syndication.io.impl.DateParser;
+import com.rometools.rome.io.ModuleGenerator;
+import com.rometools.rome.io.impl.DateParser;
 
 /**
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
@@ -106,7 +107,7 @@ public class CometeModuleGenerator  implements ModuleGenerator {
     
     protected Element generateDateElement( String tagName, Date date ) {
         Element qElement = new Element( tagName, Comete_NS );
-        qElement.addContent( DateParser.formatW3CDateTime( date ) );
+        qElement.addContent( DateParser.formatW3CDateTime( date, Locale.FRENCH ) );
         return qElement;
     }
     

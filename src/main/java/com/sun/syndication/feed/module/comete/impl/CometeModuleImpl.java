@@ -14,8 +14,9 @@
  */
 package com.sun.syndication.feed.module.comete.impl;
 
-import com.sun.syndication.feed.atom.Link;
-import com.sun.syndication.feed.module.ModuleImpl;
+import com.rometools.rome.feed.CopyFrom;
+import com.rometools.rome.feed.atom.Link;
+import com.rometools.rome.feed.module.ModuleImpl;
 import com.sun.syndication.feed.module.comete.CometeModule;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
@@ -97,9 +98,9 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
     }
 
     /* (non-Javadoc)
-     * @see com.sun.syndication.feed.CopyFrom#copyFrom(java.lang.Object)
+     * @see com.rometools.rome.feed.CopyFrom#copyFrom(java.lang.Object)
      */
-    public void copyFrom(Object obj) {
+    public void copyFrom(CopyFrom obj) {
         CometeModule cm = (CometeModuleImpl) obj;
 
         setExtraInfos( cm.getExtraInfos() );
@@ -107,7 +108,7 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
     }
 
     /* (non-Javadoc)
-     * @see com.sun.syndication.feed.CopyFrom#getInterface()
+     * @see com.rometools.rome.feed.CopyFrom#getInterface()
      */
     public Class getInterface() {
         // TODO Auto-generated method stub

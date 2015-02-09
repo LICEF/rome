@@ -15,7 +15,7 @@
 
 package com.sun.syndication.feed.module.comete;
 
-import com.sun.syndication.feed.module.Module;
+import com.rometools.rome.feed.module.Module;
 
 /** Provides access to Comete information.
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)

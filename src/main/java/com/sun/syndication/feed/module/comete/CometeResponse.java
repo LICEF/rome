@@ -18,7 +18,7 @@ package com.sun.syndication.feed.module.comete;
 import java.util.Date;
 import java.util.List;
 
-import com.sun.syndication.feed.atom.Link;
+import com.rometools.rome.feed.atom.Link;
 
 /** Provides access to A9 Open Search information.
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
