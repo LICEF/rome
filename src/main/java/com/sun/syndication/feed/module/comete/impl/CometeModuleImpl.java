@@ -21,6 +21,7 @@ import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.feed.module.comete.impl.util.LangStringImpl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -79,6 +80,22 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         keywords.add( langString );
     }
 
+    public void setAdded( Date date ) {
+        added = date;
+    }
+
+    public Date getAdded() {
+        return( added );
+    }
+
+    public void setUpdated( Date date ) {
+        updated = date;
+    }
+
+    public Date getUpdated() {
+        return( updated );
+    }
+
     /* (non-Javadoc)
      * @see com.sun.syndication.feed.CopyFrom#copyFrom(java.lang.Object)
      */
@@ -99,5 +116,7 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
 
     private List extraInfos;    
     private List keywords;    
+    private Date added;
+    private Date updated;
 
 }

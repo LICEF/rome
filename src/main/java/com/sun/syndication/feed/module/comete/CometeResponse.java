@@ -15,6 +15,7 @@
 
 package com.sun.syndication.feed.module.comete;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sun.syndication.feed.atom.Link;
@@ -31,5 +32,11 @@ public interface CometeResponse {
     public void setKeywords( List keywords );
     public List getKeywords(); 
     public void addKeyword( String keyword );
+
+    public void setAdded( Date date );
+    public Date getAdded();
+
+    public void setUpdated( Date date );
+    public Date getUpdated();
 
 }

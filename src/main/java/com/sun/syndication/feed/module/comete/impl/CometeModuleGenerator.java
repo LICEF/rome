@@ -16,6 +16,7 @@
 package com.sun.syndication.feed.module.comete.impl;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,7 @@ import com.sun.syndication.feed.module.Module;
 import com.sun.syndication.feed.module.comete.CometeModule;
 import com.sun.syndication.feed.module.comete.impl.util.LangString;
 import com.sun.syndication.io.ModuleGenerator;
+import com.sun.syndication.io.impl.DateParser;
 
 /**
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
@@ -68,7 +70,7 @@ public class CometeModuleGenerator  implements ModuleGenerator {
 
         CometeModule cm = (CometeModule)module;
 
-        if(cm.getExtraInfos() != null){
+        if(cm.getExtraInfos() != null) {
             List extraInfos = cm.getExtraInfos();
             for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
                 LangString langString = (LangString) it.next();
@@ -77,7 +79,7 @@ public class CometeModuleGenerator  implements ModuleGenerator {
             }
         }           
 
-        if(cm.getKeywords() != null){
+        if(cm.getKeywords() != null) {
             List extraInfos = cm.getKeywords();
             for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
                 LangString langString = (LangString) it.next();
@@ -85,6 +87,12 @@ public class CometeModuleGenerator  implements ModuleGenerator {
                     element.addContent( generateLangStringElement( "keyword", langString ) );
             }
         }           
+
+        if(cm.getAdded() != null )
+            element.addContent( generateDateElement( "added", cm.getAdded() ) );
+
+        if(cm.getUpdated() != null )
+            element.addContent( generateDateElement( "updated", cm.getUpdated() ) );
     }
 
     protected Element generateLangStringElement( String tagName, LangString langString ) {
@@ -93,6 +101,12 @@ public class CometeModuleGenerator  implements ModuleGenerator {
             qElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
         qElement.setText( langString.getString() );
         
+        return qElement;
+    }
+    
+    protected Element generateDateElement( String tagName, Date date ) {
+        Element qElement = new Element( tagName, Comete_NS );
+        qElement.addContent( DateParser.formatW3CDateTime( date ) );
         return qElement;
     }
     
