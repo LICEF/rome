@@ -44,33 +44,10 @@ public class CometeModuleParser implements ModuleParser {
     }
 
     public Module parse( Element dcRoot ) {
-        URL baseURI = findBaseURI( dcRoot );
-        
-        boolean foundSomething = false;
-        CometeModule cm = new CometeModuleImpl();
 
-        List extraInfos = dcRoot.getChildren("extraInfo", Comete_NS);
-        
-        if(extraInfos != null && extraInfos.size() > 0){
-            
-            List extraInfoList = new LinkedList();
-            
-            for (Iterator iter = extraInfos.iterator(); iter.hasNext();) {
-                e = (Element) iter.next();
-                extraInfoList.add( parseExtraInfo( e ) );
-            }
-        
-            cm.setExtraInfos( extraInfoList );
-        }
-        
-        return (foundSomething) ? cm : null;
-    }
-    
-    private static String parseExtraInfo( Element e ){
-       
         // Not implemented yet.
-        
-        return( null );
+
+        return null;
     }
     
 }

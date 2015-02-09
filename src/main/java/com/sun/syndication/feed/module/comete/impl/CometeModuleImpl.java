@@ -17,6 +17,7 @@ package com.sun.syndication.feed.module.comete.impl;
 import com.sun.syndication.feed.atom.Link;
 import com.sun.syndication.feed.module.ModuleImpl;
 import com.sun.syndication.feed.module.comete.CometeModule;
+import com.sun.syndication.feed.module.comete.util.LangString;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -43,13 +44,16 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         this.extraInfos = extraInfos;
     }
 
-    public void addExtraInfo( String extraInfo ) {
-        if( extraInfos != null )
-            extraInfos.add( extraInfo );
-        else {
+    public void addExtraInfo( String string ) {
+        LangString langString = new LangString();
+        langString.setString( string );
+        addExtraInfo( langString );
+    }
+
+    public void addExtraInfo( LangString langString ) {
+        if( extraInfos == null )
             extraInfos = new LinkedList();
-            extraInfos.add( extraInfo );
-        }
+        extraInfos.add( langString );
     }
 
     /* (non-Javadoc)
