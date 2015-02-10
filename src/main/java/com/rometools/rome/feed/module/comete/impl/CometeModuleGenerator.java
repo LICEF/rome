@@ -38,7 +38,7 @@ import com.rometools.rome.io.impl.DateParser;
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  * Comete implementation of ModuleGenerator
  */
-public class CometeModuleGenerator  implements ModuleGenerator {
+public class CometeModuleGenerator implements ModuleGenerator {
     
     private static final Namespace Comete_NS = Namespace.getNamespace( "comete", CometeModule.URI );
 
@@ -107,7 +107,7 @@ public class CometeModuleGenerator  implements ModuleGenerator {
     
     protected Element generateDateElement( String tagName, Date date ) {
         Element qElement = new Element( tagName, Comete_NS );
-        qElement.addContent( DateParser.formatW3CDateTime( date, Locale.FRENCH ) );
+        qElement.addContent( DateParser.formatW3CDateTime( date, Locale.getDefault() ) );
         return qElement;
     }
     

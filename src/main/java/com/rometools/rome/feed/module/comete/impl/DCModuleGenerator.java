@@ -171,7 +171,7 @@ public class DCModuleGenerator implements ModuleGenerator {
             if (dcModule.getDate() != null) {
                 for (Iterator<Date> i = dcModule.getDates().iterator(); i.hasNext();) {
                     element.addContent(generateSimpleElement("date",
-                            DateParser.formatW3CDateTime(i.next(), Locale.FRENCH)));
+                            DateParser.formatW3CDateTime(i.next(), Locale.getDefault())));
                 }
             }
             if (dcModule.getType() != null) {
