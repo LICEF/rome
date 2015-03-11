@@ -124,7 +124,6 @@ public class DCModuleGenerator implements ModuleGenerator {
             DCModule dcModule = (DCModule) module;
 
             if (dcModule.getTitle() != null) {
-                //element.addContent(generateSimpleElementList("title", dcModule.getTitles()));
                 List<LangString> titles = dcModule.getTitles();
                 
                 for( Iterator<LangString> it = titles.iterator(); it.hasNext(); ) {
@@ -139,21 +138,22 @@ public class DCModuleGenerator implements ModuleGenerator {
             List<DCSubject> subjects = dcModule.getSubjects();
             if (subjects.size() > 0) {
                 Element taxos = new Element("topics", getTaxonomyNamespace());
-                element.addContent(taxos);
                 Element bag = new Element("Bag", getRDFNamespace());
                 taxos.addContent(bag);
                 for (int i = 0; i < subjects.size(); i++) {
                     DCSubject subject = subjects.get(i);
                     if (subject.getTaxonomyUri() != null) {
-                        bag.addContent(generateTaxoLinkElement(subject));
+                        if( subject.getIdentifier() != null ) 
+                            bag.addContent(generateTaxoLinkElement(subject));
                         element.addContent(generateSkosSubjectElement(subject));
                     } else {
                         element.addContent(generateSimpleSubjectElement(subject));
                     }
                 }
+                if( bag.getChildren().size() > 0 )
+                    element.addContent(taxos);
             }
             if (dcModule.getDescription() != null) {
-                //element.addContent(generateSimpleElementList("description", dcModule.getDescriptions()));
                 List<LangString> descriptions = dcModule.getDescriptions();
                 
                 for( Iterator<LangString> it = descriptions.iterator(); it.hasNext(); ) {
@@ -210,8 +210,10 @@ public class DCModuleGenerator implements ModuleGenerator {
     protected final Element generateSkosSubjectElement(DCSubject subject) {
         Element subjectElement = new Element("subject", getDCNamespace());
         Element conceptElement = new Element("Concept", getSkosNamespace());
-        Attribute resourceAttribute = new Attribute("about", subject.getIdentifier(), getRDFNamespace());
-        conceptElement.setAttribute(resourceAttribute);
+        if( subject.getIdentifier() != null ) {
+            Attribute resourceAttribute = new Attribute("about", subject.getIdentifier(), getRDFNamespace());
+            conceptElement.setAttribute(resourceAttribute);
+        }
 
         Element typeElement = new Element("type", getRDFNamespace());
         typeElement.addContent(SKOS_URI + "Concept");
