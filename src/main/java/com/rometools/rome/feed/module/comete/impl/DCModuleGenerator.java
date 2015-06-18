@@ -51,12 +51,14 @@ public class DCModuleGenerator implements ModuleGenerator {
 
     private static final String XML_URI = "http://www.w3.org/XML/1998/namespace";
     private static final String DC_URI  = "http://purl.org/dc/elements/1.1/";
+    private static final String DCT_URI  = "http://purl.org/dc/terms/";
     private static final String TAXO_URI = "http://purl.org/rss/1.0/modules/taxonomy/";
     private static final String RDF_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
     private static final String SKOS_URI = "http://www.w3.org/2004/02/skos/core#";
 
     private static final Namespace XML_NS = Namespace.getNamespace("xml", XML_URI);
     private static final Namespace DC_NS  = Namespace.getNamespace("dc", DC_URI);
+    private static final Namespace DCT_NS  = Namespace.getNamespace("dct", DCT_URI);
     private static final Namespace TAXO_NS = Namespace.getNamespace("taxo", TAXO_URI);
     private static final Namespace RDF_NS = Namespace.getNamespace("rdf", RDF_URI);
     private static final Namespace SKOS_NS = Namespace.getNamespace("skos", SKOS_URI);
@@ -66,6 +68,7 @@ public class DCModuleGenerator implements ModuleGenerator {
     static {
         Set<Namespace> nss = new HashSet<Namespace>();
         nss.add(DC_NS);
+        nss.add(DCT_NS);
         nss.add(TAXO_NS);
         nss.add(RDF_NS);
         nss.add(SKOS_NS);
@@ -79,6 +82,10 @@ public class DCModuleGenerator implements ModuleGenerator {
     
     private final Namespace getDCNamespace() {
         return DC_NS;
+    }
+
+    private final Namespace getDCTNamespace() {
+        return DCT_NS;
     }
 
     private final Namespace getRDFNamespace() {
@@ -273,7 +280,7 @@ public class DCModuleGenerator implements ModuleGenerator {
      * @return the element generated.
      */
     protected final Element generateSimpleElement(String name, String value)  {
-        Element element = new Element(name, getDCNamespace());
+        Element element = new Element(name, getDCTNamespace());
         element.addContent(value);
 
         return element;
@@ -296,7 +303,7 @@ public class DCModuleGenerator implements ModuleGenerator {
     }
     
     protected Element generateLangStringElement( String tagName, LangString langString ) {
-        Element qElement = new Element( tagName, getDCNamespace() );
+        Element qElement = new Element( tagName, getDCTNamespace() );
         if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
             qElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );
         qElement.setText( langString.getString() );
