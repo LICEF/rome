@@ -208,7 +208,8 @@ public class DCModuleGenerator implements ModuleGenerator {
      * @return the element for the subject.
      */
     protected final Element generateSkosSubjectElement(DCSubject subject) {
-        Element subjectElement = new Element("subject", getDCNamespace());
+        Namespace topElementNs = Namespace.getNamespace(subject.getTopElementNamespacePrefix(), subject.getTopElementNamespaceUri());
+        Element subjectElement = new Element(subject.getTopElementName(), topElementNs);
         Element conceptElement = new Element("Concept", getSkosNamespace());
         if( subject.getIdentifier() != null ) {
             Attribute resourceAttribute = new Attribute("about", subject.getIdentifier(), getRDFNamespace());
@@ -243,7 +244,8 @@ public class DCModuleGenerator implements ModuleGenerator {
      * @return the element for the subject.
      */
     protected final Element generateSimpleSubjectElement(DCSubject subject) {
-        Element subjectElement = new Element("subject", getDCNamespace());
+        Namespace topElementNs = Namespace.getNamespace(subject.getTopElementNamespacePrefix(), subject.getTopElementNamespaceUri());
+        Element subjectElement = new Element(subject.getTopElementName(), topElementNs);
         LangString langString = subject.getValue();
         if( langString.getLanguage() != null && !"".equals( langString.getLanguage() ) )
             subjectElement.setAttribute( "lang", langString.getLanguage(), Namespace.XML_NAMESPACE );

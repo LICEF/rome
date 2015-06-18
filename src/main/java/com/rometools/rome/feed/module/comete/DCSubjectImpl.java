@@ -34,6 +34,7 @@ import java.io.Serializable;
  * @author Alejandro Abdelnur
  *
  * Addition of LangString
+ * Addition of topElement
  * @author Frederic Bergeron
  *
  */
@@ -42,6 +43,9 @@ public class DCSubjectImpl implements Cloneable,Serializable, DCSubject {
     private String _taxonomyUri;
     private LangString _value;
     private String _identifier;
+    private String _topElementName = "subject";
+    private String _topElementNamespaceUri = "http://purl.org/dc/elements/1.1/";
+    private String _topElementNamespacePrefix = "dc";
 
     /**
      * Default constructor. All properties are set to <b>null</b>.
@@ -94,6 +98,66 @@ public class DCSubjectImpl implements Cloneable,Serializable, DCSubject {
      */
     public String toString() {
         return _objBean.toString();
+    }
+
+    /**
+     * Returns the top element name.
+     * <p>
+     * @return the top element name.  By default, it is "subject".
+     *
+     */
+    public String getTopElementName() {
+        return( _topElementName );
+    }
+
+    /**
+     * Sets the top element name.
+     * <p>
+     * @param name the top element name into which the data will be contained.
+     *
+     */
+    public void setTopElementName(String name) {
+        _topElementName = name;
+    }
+
+    /**
+     * Returns the top element namespace uri.
+     * <p>
+     * @return the top element namespace uri.  By default, it is "http://purl.org/dc/elements/1.1/".
+     *
+     */
+    public String getTopElementNamespaceUri() {
+        return( _topElementNamespaceUri );
+    }
+
+    /**
+     * Sets the top element namespace uri.
+     * <p>
+     * @param ns the top element namespace uri into which the data will be contained.
+     *
+     */
+    public void setTopElementNamespaceUri(String nsUri) {
+        _topElementNamespaceUri = nsUri;
+    }
+
+    /**
+     * Returns the top element namespace prefix.
+     * <p>
+     * @return the top element namespace prefix.  By default, it is "http://purl.org/dc/elements/1.1/".
+     *
+     */
+    public String getTopElementNamespacePrefix() {
+        return( _topElementNamespacePrefix );
+    }
+
+    /**
+     * Sets the top element namespace prefix.
+     * <p>
+     * @param ns the top element namespace prefix into which the data will be contained.
+     *
+     */
+    public void setTopElementNamespacePrefix(String nsPrefix) {
+        _topElementNamespacePrefix = nsPrefix;
     }
 
     /**

@@ -26,10 +26,59 @@ import com.rometools.rome.feed.module.comete.impl.util.LangString;
  * @author Alejandro Abdelnur
  *
  * Addition of LangString
+ * Addition of topElementName and topElementNamespace
  * @author Frederic Bergeron
  *
  */
 public interface DCSubject extends Cloneable,CopyFrom {
+    /**
+     * Returns the top element name.
+     * <p>
+     * @return the top element name.  By default, it is "subject".
+     *
+     */
+    String getTopElementName();
+
+    /**
+     * Sets the top element name.
+     * <p>
+     * @param name the top element name into which the data will be contained.
+     *
+     */
+    void setTopElementName(String name);
+
+    /**
+     * Returns the top element namespace uri.
+     * <p>
+     * @return the top element namespace uri.  By default, it is "http://purl.org/dc/elements/1.1/".
+     *
+     */
+    String getTopElementNamespaceUri();
+
+    /**
+     * Sets the top element namespace uri.
+     * <p>
+     * @param ns the top element namespace uri into which the data will be contained.
+     *
+     */
+    void setTopElementNamespaceUri(String nsUri);
+
+    /**
+     * Returns the top element namespace prefix.
+     * <p>
+     * @return the top element namespace prefix.  By default, it is "http://purl.org/dc/elements/1.1/".
+     *
+     */
+    String getTopElementNamespacePrefix();
+
+    /**
+     * Sets the top element namespace prefix.
+     * <p>
+     * @param ns the top element namespace prefix into which the data will be contained.
+     *
+     */
+    void setTopElementNamespacePrefix(String nsPrefix);
+
     /**
      * Returns the DublinCore subject taxonomy URI.
      * <p>
