@@ -15,6 +15,7 @@
 
 package com.rometools.rome.feed.module.comete.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -68,25 +69,16 @@ public class CometeModuleGenerator implements ModuleGenerator {
     }
 
     public void generate(Module module, Element element) {
-
         CometeModule cm = (CometeModule)module;
 
         if(cm.getExtraInfos() != null) {
-            List extraInfos = cm.getExtraInfos();
-            for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
-                LangString langString = (LangString) it.next();
-                if( langString != null)
-                    element.addContent( generateLangStringElement( "extraInfo", langString ) );
-            }
+            for( LangString langString : cm.getExtraInfos() )
+                element.addContent( generateLangStringElement( "extraInfo", langString ) );
         }           
 
         if(cm.getKeywords() != null) {
-            List extraInfos = cm.getKeywords();
-            for( Iterator it = extraInfos.iterator(); it.hasNext(); ) {
-                LangString langString = (LangString) it.next();
-                if( langString != null)
-                    element.addContent( generateLangStringElement( "keyword", langString ) );
-            }
+            for( LangString langString : cm.getKeywords() )
+                element.addContent( generateLangStringElement( "keyword", langString ) );
         }           
 
         if(cm.getAdded() != null )
@@ -94,6 +86,11 @@ public class CometeModuleGenerator implements ModuleGenerator {
 
         if(cm.getUpdated() != null )
             element.addContent( generateDateElement( "updated", cm.getUpdated() ) );
+
+        if(cm.getFlags() != null) {
+            for( String flag : cm.getFlags() )
+                element.addContent( generateSimpleElement( "flag", flag ) );
+        }           
     }
 
     protected Element generateLangStringElement( String tagName, LangString langString ) {
@@ -111,4 +108,10 @@ public class CometeModuleGenerator implements ModuleGenerator {
         return qElement;
     }
     
+    protected final Element generateSimpleElement(String name, String value)  {
+        Element element = new Element(name, Comete_NS);
+        element.addContent(value);
+        return element;
+    }
+
 }

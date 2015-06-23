@@ -11,7 +11,9 @@ import com.rometools.rome.feed.module.comete.impl.util.LangString;
 import com.rometools.rome.feed.synd.SyndFeedImpl;
 
 public class CometeSyndFeedImpl extends SyndFeedImpl implements CometeSyndFeed {
-   private static final long serialVersionUID = 4003147068402456878L;
+
+    private static final long serialVersionUID = 4003147068402456878L;
+
     private static final String DC_URI  = "http://purl.org/dc/elements/1.1/";
     private static final String TAXO_URI = "http://purl.org/rss/1.0/modules/taxonomy/";
     private static final String RDF_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -43,6 +45,7 @@ public class CometeSyndFeedImpl extends SyndFeedImpl implements CometeSyndFeed {
    public void setTopics(List<DCSubject> topics) {
        _topics = topics;
    }
+
    public List<Element> getForeignMarkup() {
        List<Element> markup = new ArrayList<Element>();
        /*
@@ -70,4 +73,5 @@ public class CometeSyndFeedImpl extends SyndFeedImpl implements CometeSyndFeed {
        }
        return markup;
    }
+
 }

@@ -19,18 +19,19 @@ import java.util.Date;
 import java.util.List;
 
 import com.rometools.rome.feed.atom.Link;
+import com.rometools.rome.feed.module.comete.impl.util.LangString;
 
 /** Provides access to A9 Open Search information.
  * @author Frederic Bergeron (frederic.bergeron@licef.ca)
  */
 public interface CometeResponse {
 
-    public void setExtraInfos( List extraInfos );
-    public List getExtraInfos(); 
+    public void setExtraInfos( List<LangString> extraInfos );
+    public List<LangString> getExtraInfos(); 
     public void addExtraInfo( String extraInfo );
 
-    public void setKeywords( List keywords );
-    public List getKeywords(); 
+    public void setKeywords( List<LangString> keywords );
+    public List<LangString> getKeywords(); 
     public void addKeyword( String keyword );
 
     public void setAdded( Date date );
@@ -38,5 +39,9 @@ public interface CometeResponse {
 
     public void setUpdated( Date date );
     public Date getUpdated();
+
+    public void setFlags( List<String>flags );
+    public List<String> getFlags(); 
+    public void addFlag( String flag );
 
 }

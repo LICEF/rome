@@ -37,13 +37,13 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         super(CometeModuleImpl.class, CometeModuleImpl.URI);
     }
 
-    public List getExtraInfos() {
-        this.extraInfos = (extraInfos == null) ? new LinkedList() : extraInfos;
+    public List<LangString> getExtraInfos() {
+        this.extraInfos = (extraInfos == null) ? new LinkedList<LangString>() : extraInfos;
 
         return this.extraInfos;
     }
 
-    public void setExtraInfos( List extraInfos ) {
+    public void setExtraInfos( List<LangString> extraInfos ) {
         this.extraInfos = extraInfos;
     }
 
@@ -55,17 +55,17 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
 
     public void addExtraInfo( LangString langString ) {
         if( extraInfos == null )
-            extraInfos = new LinkedList();
+            extraInfos = new LinkedList<LangString>();
         extraInfos.add( langString );
     }
 
-    public List getKeywords() {
-        this.keywords = (keywords == null) ? new LinkedList() : keywords;
+    public List<LangString> getKeywords() {
+        this.keywords = (keywords == null) ? new LinkedList<LangString>() : keywords;
 
         return this.keywords;
     }
 
-    public void setKeywords( List keywords ) {
+    public void setKeywords( List<LangString> keywords ) {
         this.keywords = keywords;
     }
 
@@ -77,7 +77,7 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
 
     public void addKeyword( LangString langString ) {
         if( keywords == null )
-            keywords = new LinkedList();
+            keywords = new LinkedList<LangString>();
         keywords.add( langString );
     }
 
@@ -97,6 +97,22 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         return( updated );
     }
 
+    public List<String> getFlags() {
+        this.flags = (flags == null) ? new LinkedList<String>() : flags;
+
+        return this.flags;
+    }
+
+    public void setFlags( List<String> flags ) {
+        this.flags = flags;
+    }
+
+    public void addFlag( String flag ) {
+        if( flags == null )
+            flags = new LinkedList<String>();
+        flags.add( flag );
+    }
+
     /* (non-Javadoc)
      * @see com.rometools.rome.feed.CopyFrom#copyFrom(java.lang.Object)
      */
@@ -105,6 +121,7 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
 
         setExtraInfos( cm.getExtraInfos() );
         setKeywords( cm.getKeywords() );
+        setFlags( cm.getFlags() );
     }
 
     /* (non-Javadoc)
@@ -115,9 +132,10 @@ public class CometeModuleImpl extends ModuleImpl implements CometeModule, Serial
         return CometeModule.class;
     }
 
-    private List extraInfos;    
-    private List keywords;    
+    private List<LangString> extraInfos;    
+    private List<LangString> keywords;    
     private Date added;
     private Date updated;
+    private List<String> flags;
 
 }
